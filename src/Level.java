@@ -95,6 +95,27 @@ public class Level {
         board.setCell(fox.getTailPosition(),new Cell(Cell.CellType.FOX,fox));
         return board;
     }
+    public static Board level7()
+    {
+        Board board = new Board();
+
+        board.setCell(new Position(3, 0), new Cell(Cell.CellType.RABBIT, new Rabbit()));
+        board.setCell(new Position(3, 3), new Cell(Cell.CellType.RABBIT, new Rabbit()));
+        board.setCell(new Position(0, 0), new Cell(Cell.CellType.HOLE, new Hole()));
+        board.setCell(new Position(0, 4), new Cell(Cell.CellType.HOLE, new Hole()));
+        board.setCell(new Position(2, 2), new Cell(Cell.CellType.HOLE, new Hole()));
+        board.setCell(new Position(4, 0), new Cell(Cell.CellType.HOLE, new Hole()));
+        board.setCell(new Position(1, 4), new Cell(Cell.CellType.MUSHROOM, new Mushroom()));
+        board.setCell(new Position(2, 4), new Cell(Cell.CellType.MUSHROOM, new Mushroom()));
+        board.setCell(new Position(4, 4), new Cell(Cell.CellType.MUSHROOM, new Mushroom()));
+        Fox fox=new Fox(Fox.Orientation.VERTICAL,new Position(1,1),new Position(0,1));
+        board.setCell(fox.getHeadPosition(),new Cell(Cell.CellType.FOX,fox));
+        board.setCell(fox.getTailPosition(),new Cell(Cell.CellType.FOX,fox));
+        Fox fox1=new Fox(Fox.Orientation.VERTICAL,new Position(0,3),new Position(1,3));
+        board.setCell(fox1.getHeadPosition(),new Cell(Cell.CellType.FOX,fox1));
+        board.setCell(fox1.getTailPosition(),new Cell(Cell.CellType.FOX,fox1));
+        return board;
+    }
     public static Board level8()
     {
         Board board = new Board();
@@ -144,6 +165,8 @@ public class Level {
                 return level5();
             case 6:
                 return level6();
+            case 7:
+                return level7();
             case 8:
                 return level8();
             case 9:

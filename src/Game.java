@@ -24,7 +24,7 @@ public class Game {
             {
                 goalNode = node;
                 founddfssoulation=true;
-
+                break;
             }
             for (Node nextstate:node.generateNextStates())
             {
@@ -77,13 +77,17 @@ public class Game {
     public boolean ucs()
     {
         PriorityQueue<Node> ucsqueue=new PriorityQueue(Comparator.comparingInt(Node::getCost));
-        Map<Node,Integer> uscvisiter=new HashMap<>();
+        Map<Node,Integer> ucsvisiter=new HashMap<>();
         ucsqueue.add(intitNode);
-        uscvisiter.put(intitNode,0);
+        ucsvisiter.put(intitNode,0);
         boolean founducssoulation=false;
         while (!ucsqueue.isEmpty())
         {
             Node node=ucsqueue.poll();
+            if(node.getCost()>ucsvisiter.get(node))
+            {
+                continue;
+            }
             if(node.isFinal())
             {
                 goalNode=node;
@@ -91,17 +95,18 @@ public class Game {
                 break;
             }
             for(Node next:node.generateNextStates()){
-                int newcost=next.getCost();
-                if(!uscvisiter.containsKey(next))
+                int nextcost =next.getCost();
+                if(!ucsvisiter.containsKey(next) && !ucsqueue.contains(next))
                 {
-                    uscvisiter.put(next,newcost);
+                    ucsvisiter.put(next,nextcost);
                     ucsqueue.add(next);
                 }
-                else if(newcost<uscvisiter.get(next))
+                else if(ucsqueue.contains(next) && nextcost<ucsvisiter.get(next))
                 {
-                    uscvisiter.put(next,newcost);
+                    ucsvisiter.put(next,nextcost);
                     ucsqueue.add(next);
                 }
+
             }
 
         }
@@ -110,7 +115,7 @@ public class Game {
             printpath(goalNode);
             goalNode.printState();
         }
-        System.out.println("Expanded nodes: " + uscvisiter.size());
+        System.out.println("visite nodes: " + ucsvisiter.size());
         return founducssoulation;
     }
 
