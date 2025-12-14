@@ -97,6 +97,28 @@ public class Node {
         }
         return true;
     }
+    public int Heuristic()
+    {
+        int count=0;
+        for(int r=0;r<5;r++)
+        {
+            for(int c=0;c<5;c++)
+            {
+                Cell cell =state.getCell(new Position(r,c));
+                if(cell.getPiece() instanceof Rabbit)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public int getf()
+    {
+        return cost +Heuristic();
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Node)) return false;

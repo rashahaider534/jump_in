@@ -119,6 +119,50 @@ public class Game {
         return founducssoulation;
     }
 
+    public boolean Astar()
+    {
+        PriorityQueue<Node> ucsqueue=new PriorityQueue(Comparator.comparingInt(Node::getf));
+        Map<Node,Integer> ucsvisiter=new HashMap<>();
+        ucsqueue.add(intitNode);
+        ucsvisiter.put(intitNode,0);
+        boolean founducssoulation=false;
+        while (!ucsqueue.isEmpty())
+        {
+            Node node=ucsqueue.poll();
+            if(node.getCost()>ucsvisiter.get(node))
+            {
+                continue;
+            }
+            if(node.isFinal())
+            {
+                goalNode=node;
+                founducssoulation=true;
+                break;
+            }
+            for(Node next:node.generateNextStates()){
+                int nextcost =next.getCost();
+                if(!ucsvisiter.containsKey(next) && !ucsqueue.contains(next))
+                {
+                    ucsvisiter.put(next,nextcost);
+                    ucsqueue.add(next);
+                }
+                else if(ucsqueue.contains(next) && nextcost<ucsvisiter.get(next))
+                {
+                    ucsvisiter.put(next,nextcost);
+                    ucsqueue.add(next);
+                }
+
+            }
+
+        }
+        if(founducssoulation)
+        {
+            printpath(goalNode);
+            goalNode.printState();
+        }
+        System.out.println("visite nodes: " + ucsvisiter.size());
+        return founducssoulation;
+    }
     public void printpath(Node goal)
     {
         List<Action>path=new ArrayList<>();
