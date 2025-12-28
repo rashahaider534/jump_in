@@ -99,19 +99,39 @@ public class Node {
     }
     public int Heuristic()
     {
-        int count=0;
+//        int count=0;
+//        for(int r=0;r<5;r++)
+//        {
+//            for(int c=0;c<5;c++)
+//            {
+//                Cell cell =state.getCell(new Position(r,c));
+//                if(cell.getPiece() instanceof Rabbit)
+//                {
+//                    count++;
+//                }
+//            }
+//        }
+//        return count;
+
+        int h=0;
         for(int r=0;r<5;r++)
-        {
-            for(int c=0;c<5;c++)
-            {
-                Cell cell =state.getCell(new Position(r,c));
-                if(cell.getPiece() instanceof Rabbit)
-                {
-                    count++;
-                }
-            }
-        }
-        return count;
+       {
+           for(int c=0;c<5;c++) {
+                    Cell cell=state.getCell(new Position(r,c));
+                    if(cell.getPiece() instanceof  Rabbit)
+                    {
+                        if(r ==4 || r==0 ||c==4 || c==0)
+                        {
+                            h+=1;
+                        }
+                        else{
+                            h+=2;
+                        }
+                    }
+           }
+           }
+        return h;
+
     }
     public int getf()
     {

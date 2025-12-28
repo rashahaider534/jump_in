@@ -121,15 +121,15 @@ public class Game {
 
     public boolean Astar()
     {
-        PriorityQueue<Node> ucsqueue=new PriorityQueue(Comparator.comparingInt(Node::getf));
-        Map<Node,Integer> ucsvisiter=new HashMap<>();
-        ucsqueue.add(intitNode);
-        ucsvisiter.put(intitNode,0);
+        PriorityQueue<Node> aqueue=new PriorityQueue(Comparator.comparingInt(Node::getf));
+        Map<Node,Integer> avisiter=new HashMap<>();
+        aqueue.add(intitNode);
+        avisiter.put(intitNode,0);
         boolean founducssoulation=false;
-        while (!ucsqueue.isEmpty())
+        while (!aqueue.isEmpty())
         {
-            Node node=ucsqueue.poll();
-            if(node.getCost()>ucsvisiter.get(node))
+            Node node=aqueue.poll();
+            if(node.getCost()>avisiter.get(node))
             {
                 continue;
             }
@@ -141,15 +141,14 @@ public class Game {
             }
             for(Node next:node.generateNextStates()){
                 int nextcost =next.getCost();
-                if(!ucsvisiter.containsKey(next) && !ucsqueue.contains(next))
+                if(!avisiter.containsKey(next) && !aqueue.contains(next))
                 {
-                    ucsvisiter.put(next,nextcost);
-                    ucsqueue.add(next);
+                    avisiter.put(next,nextcost);
+                    aqueue.add(next);
                 }
-                else if(ucsqueue.contains(next) && nextcost<ucsvisiter.get(next))
-                {
-                    ucsvisiter.put(next,nextcost);
-                    ucsqueue.add(next);
+                else if(aqueue.contains(next) && nextcost<avisiter.get(next))
+                {   avisiter.put(next,nextcost);
+                    aqueue.add(next);
                 }
 
             }
@@ -160,7 +159,7 @@ public class Game {
             printpath(goalNode);
             goalNode.printState();
         }
-        System.out.println("visite nodes: " + ucsvisiter.size());
+        System.out.println("visite nodes: " + avisiter.size());
         return founducssoulation;
     }
     public void printpath(Node goal)
